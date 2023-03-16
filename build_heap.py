@@ -41,12 +41,12 @@ def make_heap(n_elements, arr):
 n = 0
 arr = []
 
-input_type = input()
+input_type = input().strip().upper()
 
-if input_type.upper() == "I":
+if input_type == "I":
   n = int(input())
   arr = input().split(" ")
-elif input_type.upper() == "F":
+elif input_type == "F":
   filename = input()
 
   with open(f"tests/{filename}") as file:
