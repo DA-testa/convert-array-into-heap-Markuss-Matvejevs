@@ -53,7 +53,7 @@ elif input_type.upper() == "F":
     n = int(file.readline())
     arr = file.readline().split(" ")
 else:
-  print("Invalid input type")
+  print("Invalid input type", input_type)
   exit()
 
 make_heap(n, [int(item) for item in arr])
