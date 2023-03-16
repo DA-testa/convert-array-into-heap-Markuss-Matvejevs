@@ -1,42 +1,60 @@
-# python3
+# pārveido masīvu par min-heap (katra mezgla vērtība ir mazāka vai vienāda par tā zaru vērtībām)
+def make_heap(n_elements, arr):
+  swaps = []
+  
+  def heapify(i):
+    smallest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
 
+    # jāsaprot vai konkrētā mezgla zaru vērtība ir mazāka par paša vērtību
+    # t.i., no visiem trim mezgliem atrodam mazākās vērtības indeksu
+    if left <= n_elements - 1 and arr[left] < arr[smallest]:
+      smallest = left
+    if right <= n_elements - 1 and arr[right] < arr[smallest]:
+      smallest = right
 
-def build_heap(data):
-    swaps = []
-    # TODO: Creat heap and heap sort
-    # try to achieve  O(n) and not O(n2)
+    # ja atradām indeksu, kurā ir mazāka vērtība par šobrīdējo mezglu 'i',
+    # tad samainām to vietām ar 'i' vērtību
+    if i != smallest:
+      arr[i], arr[smallest] = arr[smallest], arr[i]
 
+      # atceramies, kādos indeksos mainījām elementus
+      swaps.append((i,smallest))
 
-    return swaps
-
-
-def main():
+      # tā kā atradām jaunu mazāko elementu, skaidrs, ka bija iespējams veikt izmaiņas heap struktūrā (t.i., neesam sasnieguši galotni)
+      # tādēļ mēģinām meklēt no mazākā indeksa uz leju
+      heapify(smallest)
+  
+  # mums nevajag iterēt pāri katram elementam, jo tad mēs pārbaudītu vienus un tos pašus mezglus vairākas reizes
+  for i in range(n_elements // 2 - 1, -1, -1):
+    heapify(i)
     
-    # TODO : add input and corresponding checks
-    # add another input for I or F 
-    # first two tests are from keyboard, third test is from a file
+  # print(arr)
 
+  total_swaps = len(swaps)
+  assert total_swaps < 4 * n_elements
 
-    # input from keyboard
-    n = int(input())
-    data = list(map(int, input().split()))
+  pretty_indeces_separated_by_newlines = "\n".join([ f"{i} {j}" for i, j in swaps ])
+  print(total_swaps, pretty_indeces_separated_by_newlines, sep="\n")
 
-    # checks if lenght of data is the same as the said lenght
-    assert len(data) == n
+n = 0
+arr = []
 
-    # calls function to assess the data 
-    # and give back all swaps
-    swaps = build_heap(data)
+input_type = input().strip().upper()
 
-    # TODO: output how many swaps were made, 
-    # this number should be less than 4n (less than 4*len(data))
+if input_type == "I":
+  n = int(input())
+  arr = input().split(" ")
+elif input_type == "F":
+  filename = input()
 
+  with open(f"tests/{filename}") as file:
+    n = int(file.readline())
+    arr = file.readline().split(" ")
+else:
+  print("Invalid input type", input_type)
+  exit()
 
-    # output all swaps
-    print(len(swaps))
-    for i, j in swaps:
-        print(i, j)
+make_heap(n, [int(item) for item in arr])
 
-
-if __name__ == "__main__":
-    main()
