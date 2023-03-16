@@ -35,10 +35,25 @@ def make_heap(n_elements, arr):
   total_swaps = len(swaps)
   assert total_swaps < 4 * n_elements
 
-  pretty_indeces_separated_by_newlines = "\n".join([ f"{i}, {j}" for i, j in swaps ])
+  pretty_indeces_separated_by_newlines = "\n".join([ f"{i} {j}" for i, j in swaps ])
   print(total_swaps, pretty_indeces_separated_by_newlines, sep="\n")
- 
-arr = [5,4,3,2,1]
-n = len(arr)
-make_heap(n, arr)
+
+n = 0
+arr = []
+
+input_type = input()
+
+if input_type == "I":
+  n = int(input())
+  arr = input().split(" ")
+elif input_type == "F":
+  filename = input()
+
+  with open(f"tests/{filename}") as file:
+    n = int(file.readline())
+    arr = file.readline().split(" ")
+else:
+  exit()
+
+make_heap(n, [int(item) for item in arr])
 
