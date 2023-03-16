@@ -43,16 +43,17 @@ arr = []
 
 input_type = input()
 
-if input_type == "I":
+if input_type.upper() == "I":
   n = int(input())
   arr = input().split(" ")
-elif input_type == "F":
+elif input_type.upper() == "F":
   filename = input()
 
   with open(f"tests/{filename}") as file:
     n = int(file.readline())
     arr = file.readline().split(" ")
 else:
+  print("Invalid input type")
   exit()
 
 make_heap(n, [int(item) for item in arr])
